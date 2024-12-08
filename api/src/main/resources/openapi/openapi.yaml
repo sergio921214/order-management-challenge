@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  title: Order Management System
+  description: API for managing the lifecycle of orders.
+  version: 1.0.0
+
+paths:
+  /orders:
+    $ref: "./paths/orders.yaml"
+  /orders/{id}/pay:
+    $ref: "./paths/orders.yaml"
+  /orders/{id}/fulfill:
+    $ref: "./paths/orders.yaml"
+  /fulfillment/simulate:
+    $ref: "./paths/fulfillment.yaml"
+
+components:
+  schemas:
+    Order:
+      $ref: "./components/schemas/order.yaml"
+    Basket:
+      $ref: "./components/schemas/basket.yaml"
+    Item:
+      $ref: "./components/schemas/item.yaml"
+  responses:
+    OrderCreated:
+      $ref: "./components/responses/orderCreated.yaml"
+    OrderPaid:
+      $ref: "./components/responses/orderPaid.yaml"
