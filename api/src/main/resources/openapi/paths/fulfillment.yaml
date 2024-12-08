@@ -1,0 +1,6 @@
+/fulfillment/simulate:
+  post:
+    summary: Simulate fulfillment results
+    responses:
+      200:
+        description: Fulfillment results simulated

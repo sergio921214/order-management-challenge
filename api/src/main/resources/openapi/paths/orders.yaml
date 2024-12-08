@@ -1,0 +1,48 @@
+/orders:
+  post:
+    summary: Create a new order
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/basket.yaml"
+    responses:
+      201:
+        $ref: "../components/responses/orderCreated.yaml"
+/orders/{id}/pay:
+  post:
+    summary: Confirm payment for an order
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        $ref: "../components/responses/orderPaid.yaml"
+/orders/{id}/fulfill:
+  post:
+    summary: Move an order to fulfillment
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Order moved to fulfillment
+/orders/{id}/close:
+  post:
+    summary: Close an order after fulfillment
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Order closed successfully
