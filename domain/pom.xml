@@ -10,10 +10,5 @@
   </parent>
   
   <artifactId>order-management-challenge-domain</artifactId>
-  
-  <dependencies>
-    
-  </dependencies>
-
 
 </project>
