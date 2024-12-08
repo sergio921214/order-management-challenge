@@ -27,6 +27,7 @@
 
   <modules>
     <module>api</module>
+    <module>db</module>
   </modules>
 
   <dependencies>
