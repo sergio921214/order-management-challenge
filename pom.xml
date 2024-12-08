@@ -43,11 +43,17 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
   </dependencies>
 
   <modules>
     <module>api</module>
     <module>db</module>
+    <module>domain</module>
   </modules>
 
   <build>
