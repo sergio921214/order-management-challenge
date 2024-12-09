@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_management
+    username: order_user
+    password: ordere_password
