@@ -12,7 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "state_machine_context")
+
+@Table(schema = "order_management", name = "state_machine_context")
 @Getter
 @Builder
 @NoArgsConstructor
@@ -28,6 +29,6 @@ public class StateMachineContextEntity {
 
   @Column(name = "last_updated")
   private LocalDateTime lastUpdated;
-  
+
 }
 
