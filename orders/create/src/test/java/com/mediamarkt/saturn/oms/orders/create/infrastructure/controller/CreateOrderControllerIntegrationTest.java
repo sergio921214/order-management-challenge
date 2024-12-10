@@ -1,5 +1,6 @@
 package com.mediamarkt.saturn.oms.orders.create.infrastructure.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,13 +37,12 @@ public class CreateOrderControllerIntegrationTest {
         .andExpect(jsonPath("$.state").value("CREATED")).andExpect(jsonPath("$.id").isNotEmpty());
 
     Integer orderCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM orders WHERE state = 'CREATED'", Integer.class);
-    assert orderCount == 1;
-
     Integer stockItem1 = jdbcTemplate.queryForObject("SELECT stock FROM items WHERE id = 1", Integer.class);
     Integer stockItem2 = jdbcTemplate.queryForObject("SELECT stock FROM items WHERE id = 2", Integer.class);
 
-    assert stockItem1 == 98;
-    assert stockItem2 == 47;
+    assertEquals(1, orderCount);
+    assertEquals(98, stockItem1);
+    assertEquals(47, stockItem2);
   }
 }
 
