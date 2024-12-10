@@ -16,6 +16,16 @@ public class StateMachineService {
 
   private final StateMachineRuntimePersister<OrderState, String, String> persister;
 
+  public void saveInitialState(String machineId, OrderState initialState) {
+    try {
+      StateMachineContext<OrderState, String> context = new DefaultStateMachineContext<>(
+          initialState, null, null, null);
+      persister.write(context, machineId);
+    } catch (Exception e) {
+      throw new RuntimeException("Error saving initial state: " + e.getMessage(), e);
+    }
+  }
+
   public void sendEvent(String machineId, String event) {
     try {
       stateMachine.start();
