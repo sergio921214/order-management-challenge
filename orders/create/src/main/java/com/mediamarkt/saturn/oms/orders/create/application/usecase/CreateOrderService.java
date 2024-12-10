@@ -1,6 +1,7 @@
 package com.mediamarkt.saturn.oms.orders.create.application.usecase;
 
-import static com.medimarkt.saturn.oms.domain.service.BasketValidator.validateBasket;
+import static com.medimarkt.saturn.oms.domain.service.BasketValidator.validateBasketStock;
+import static com.medimarkt.saturn.oms.domain.service.BasketValidator.validateNonEmptyBasket;
 
 import java.util.List;
 import java.util.Map;
@@ -33,22 +34,17 @@ public class CreateOrderService implements CreateOrderUseCase {
   @Override
   @Transactional
   public Order execute(Basket basket) {
+    validateNonEmptyBasket(basket);
     Map<Long, Integer> stockMap = this.getStockForItems(basket);
-    validateBasket(basket, stockMap);
+    validateBasketStock(basket, stockMap);
 
-    Order order = Order.builder()
-        .items(basket.getItems())
-        .state(OrderState.CREATED)
-        .build();
+    Order order = Order.builder().items(basket.getItems()).state(OrderState.CREATED).build();
     Order savedOrder = orderWriteRepository.save(order);
 
-    basket.getItems().forEach(basketItem ->
-        basketItemRepository.saveBasketItem(savedOrder.getId(), basketItem.getItem().getId(), basketItem.getQuantity())
-    );
+    basket.getItems().forEach(
+        basketItem -> basketItemRepository.saveBasketItem(savedOrder.getId(), basketItem.getItem().getId(), basketItem.getQuantity()));
 
-    basket.getItems().forEach(basketItem ->
-        itemRepository.decreaseStock(basketItem.getItem().getId(), basketItem.getQuantity())
-    );
+    basket.getItems().forEach(basketItem -> itemRepository.decreaseStock(basketItem.getItem().getId(), basketItem.getQuantity()));
 
     stateMachineService.saveInitialState(String.valueOf(savedOrder.getId()), OrderState.CREATED);
 
@@ -56,9 +52,7 @@ public class CreateOrderService implements CreateOrderUseCase {
   }
 
   private Map<Long, Integer> getStockForItems(Basket basket) {
-    List<Long> itemIds = basket.getItems().stream()
-        .map(item -> item.getItem().getId())
-        .collect(Collectors.toList());
+    List<Long> itemIds = basket.getItems().stream().map(item -> item.getItem().getId()).collect(Collectors.toList());
     return itemRepository.findStockByIds(itemIds);
   }
 

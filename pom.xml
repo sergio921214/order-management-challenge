@@ -69,6 +69,7 @@
     <module>db</module>
     <module>domain</module>
     <module>orders</module>
+    <module>common</module>
   </modules>
 
   <build>
