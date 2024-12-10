@@ -44,5 +44,12 @@ public class CreateOrderControllerIntegrationTest {
     assertEquals(98, stockItem1);
     assertEquals(47, stockItem2);
   }
+
+  @Test
+  public void testHandleIllegalArgumentException() throws Exception {
+    mockMvc.perform(post("/orders").contentType("application/json").content("{}")) // Invalid request
+        .andExpect(status().isBadRequest()).andExpect(jsonPath("$.message").value("Basket cannot be empty"));
+  }
+
 }
 

@@ -84,7 +84,7 @@ class CreateOrderServiceTest {
   void testCreateOrderFailsDueToInsufficientStock() {
     when(itemRepository.findStockByIds(anyList())).thenReturn(Map.of(1L, 1));
 
-    assertThrows(IllegalArgumentException.class, () -> createOrderService.execute(testBasket));
+    assertThrows(IllegalStateException.class, () -> createOrderService.execute(testBasket));
 
     verifyNoInteractions(orderWriteRepository);
     verifyNoInteractions(basketItemRepository);
