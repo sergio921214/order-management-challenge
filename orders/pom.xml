@@ -16,6 +16,7 @@
     <module>statemachine</module>
     <module>create</module>
     <module>payment</module>
+    <module>fulfillment</module>
   </modules>
 
   <dependencies>
